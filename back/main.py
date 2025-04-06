@@ -5,8 +5,9 @@ from fastapi import APIRouter, FastAPI
 app = FastAPI()
 router = APIRouter()
 
-class Item(BaseModel):
-    name: str
+class Student(BaseModel):
+    first_name: str
+    last_name: str
     email: str
     enrollment: bool
     number: int
@@ -14,28 +15,33 @@ class Item(BaseModel):
 
 
 @router.post("/Students/addStudents/")
-async def create_item(item: Item):
-    item_dict = item.dict()
+async def create_item(item: Student):
+    Student_dict = item.dict()
     if item.enrollment :
-        name= item.name
+        first_name= item.first_name
+        last_name= item.last_name
         email= item.email
         number= item.number
         course=item.course
-        item_dict.update({"name": name}, {"email": email}, {"number": number}, {"course": course})
-    return item_dict
+        Student_dict.append({"first_name": first_name}, {"last_name": last_name}, {"email": email}, {"number": number}, {"course": course})
+    return Student_dict
 
 
 
 @router.put("/Students/EditStudents/")
-async def edit_item(item_id: int, item: Item):
-    for student in Students:
+async def edit_item(item_id: int, item: Student):
+    StudentOnCourse = []
+    for student in StudentOnCourse:
         if item.enrollment :
             name= item.name
             email= item.email
             number= item.number
             course=item.course
-            item_dict.update({"name": name}, {"email": email}, {"number": number}, {"course": course})
-        return item_dict
+            student.update({"name": name}, {"email": email}, {"number": number}, {"course": course})
+        return student
+
+
+
 
 
 app.include_router(router)
